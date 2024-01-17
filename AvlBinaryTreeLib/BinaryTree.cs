@@ -7,8 +7,7 @@ namespace AvlBinaryTreeLib
 {
     public class BinaryTree<T> where T : IComparable<T>
     {
-        public bool IsAvl { get; set; }
-        public void Insert(T value)
+        public BinaryTree<T> Insert(T value)
         {
             if(root == null)
             {
@@ -18,13 +17,17 @@ namespace AvlBinaryTreeLib
             {
                 root.Insert(value);
             }
+
+            return this;
         }
 
-        public void Search(T value)
+        public Node<T>? Search(T value)
         {
-            throw new NotImplementedException();
+            return root?.Search(value);
         }
 
-        private Node<T> root;
+        private Node<T>? root;
+
+        public int? BalanceFactor => root?.BalanceFactor();
     }
 }
