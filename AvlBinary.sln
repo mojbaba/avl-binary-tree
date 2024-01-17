@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvlBinaryTreeLib", "AvlBinaryTreeLib\AvlBinaryTreeLib.csproj", "{1B8F3D15-67B2-4161-A33E-688150A3B922}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvlBinaryTreeTest", "AvlBinaryTreeTest\AvlBinaryTreeTest.csproj", "{9BC701F9-9D43-48E4-9E23-FE2A38C019D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{1B8F3D15-67B2-4161-A33E-688150A3B922}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B8F3D15-67B2-4161-A33E-688150A3B922}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B8F3D15-67B2-4161-A33E-688150A3B922}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BC701F9-9D43-48E4-9E23-FE2A38C019D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BC701F9-9D43-48E4-9E23-FE2A38C019D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BC701F9-9D43-48E4-9E23-FE2A38C019D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BC701F9-9D43-48E4-9E23-FE2A38C019D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
