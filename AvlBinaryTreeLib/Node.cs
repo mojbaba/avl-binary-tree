@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
@@ -11,52 +12,103 @@ namespace AvlBinaryTreeLib
         enum Added
         {
             Left,
-            Right,
-            None
+            Right
         }
+
+        public bool IsDummy { get; set; }
 
         public int Height { get; private set; } = 1;
         public T Value { get; } = value;
-        public Node<T>? Left { get; private set; }
-        public Node<T>? Right { get; private set; }
-
-        private Node<T>? Parent { get; set; }
+        public Node<T>? Left { get; set; }
+        public Node<T>? Right { get; set; }
 
         public void Insert(T ivalue)
         {
             Add(ivalue);
         }
 
-        private Added Add(T ivalue)
+        private Stack<Added> InsertRight(T ivalue)
+        {
+            Stack<Added> stack;
+
+            if (Right is not null)
+            {
+                stack = Right.Add(ivalue);
+            }
+            else
+            {
+                Right = new Node<T>(ivalue);
+                stack = new Stack<Added>();
+            }
+
+            stack.Push(Added.Right);
+
+            return stack;
+        }
+
+        private Stack<Added> InsertLeft(T ivalue)
+        {
+            Stack<Added> stack;
+
+            if (Left is not null)
+            {
+                stack = Left.Add(ivalue);
+            }
+            else
+            {
+                Left = new Node<T>(ivalue);
+                stack = new Stack<Added>();
+            }
+
+            stack.Push(Added.Left);
+
+            return stack;
+        }
+
+        private Stack<Added> Add(T ivalue)
         {
             var comparedTo = ivalue.CompareTo(Value);
-            Added firstAdded = Added.None;
-            Added secondAdded = Added.None;
+            Stack<Added> stack;
 
-            if (comparedTo > 0)
+            if (IsDummy || comparedTo > 0)
             {
-                firstAdded = Added.Right;
-                secondAdded = InsertRight(ivalue);
+                stack = InsertRight(ivalue);
+
+                if (Right.BalanceFactor() > 1)
+                    Rebalance(Right, stack);
             }
             else if (comparedTo < 0)
             {
-                firstAdded = Added.Left;
-                secondAdded = InsertLeft(ivalue);
-            }
+                stack = InsertLeft(ivalue);
 
-            if (BalanceFactor() > 1)
+                if (Left.BalanceFactor() > 1)
+                    Rebalance(Left, stack);
+            }
+            else
             {
-                Rebalance(firstAdded, secondAdded);
+                stack = new Stack<Added>();
             }
 
             this.Height = Math.Max(Left?.Height ?? 0, Right?.Height ?? 0) + 1;
 
-            return firstAdded;
+            return stack;
         }
 
-        private void Rebalance(Added first, Added second)
+        private void Rebalance(Node<T> balancingRoot, Stack<Added> stack)
         {
-            Action? action = (first, second) switch
+            var current = stack.Pop();
+
+            var first = stack.Pop();
+            var second = stack.Pop();
+
+            stack.Push(current);
+
+            Rebalance(balancingRoot, first, second);
+        }
+
+        private void Rebalance(Node<T> balancingRoot, Added first, Added second)
+        {
+            Action<Node<T>>? action = (first, second) switch
             {
                 (Added.Right, Added.Right) => RR,
                 (Added.Left, Added.Left) => LL,
@@ -65,103 +117,82 @@ namespace AvlBinaryTreeLib
                 _ => null
             };
 
-            action?.Invoke();
+            action?.Invoke(balancingRoot);
         }
 
-        private void RR()
+        private void ChangeMyChild(Node<T> oldChild, Node<T> newChild)
         {
-            var A = this;
+            if (Left == oldChild)
+            {
+                Left = newChild;
+            }
+            else
+            {
+                Right = newChild;
+            }
+        }
+        private void RR(Node<T> balancingRoot)
+        {
+            var A = balancingRoot;
             var B = A.Right;
-            var C = B?.Right;
-
-            ChangeChild(A, B);
+            var C = B.Right;
 
             var L_B = B.Left;
 
-            SetRight(A, L_B);
+            A.Right = L_B;
+            B.Left = A;
 
-            SetLeft(B, A);
+            ChangeMyChild(A, B);
         }
 
-        private void LL()
+
+        private void LL(Node<T> balancingRoot)
         {
-            var A = this;
+            var A = balancingRoot;
             var B = A.Left;
             var C = B.Left;
-
-            ChangeChild(A, B);
 
             var R_B = B.Right;
 
-            SetLeft(A, R_B);
+            A.Left = R_B;
+            B.Right = A;
 
-            SetRight(B, A);
+            ChangeMyChild(A, B);
+
         }
-        private void RL()
+        private void RL(Node<T> balancingRoot)
         {
-            var A = this;
+            var A = balancingRoot;
             var B = A.Right;
             var C = B.Left;
 
-            ChangeChild(A, C);
-
             var L_C = C.Left;
             var R_C = C.Right;
 
-            SetRight(A, L_C);
+            A.Right = L_C;
+            B.Left = R_C;
 
-            SetLeft(B, R_C);
+            C.Left = A;
+            C.Right = B;
 
-            SetLeft(C, A);
-
-            SetRight(C, B);
+            ChangeMyChild(A, C);
         }
-        private void LR()
+        private void LR(Node<T> balancingRoot)
         {
-            var A = this;
+            var A = balancingRoot;
             var B = A.Left;
-            var C = B?.Right;
-
-            ChangeChild(A, C);
+            var C = B.Right;
 
             var L_C = C.Left;
-
             var R_C = C.Right;
 
-            SetLeft(A, R_C);
+            B.Right = L_C;
+            A.Left = R_C;
 
-            SetRight(B, L_C);
+            C.Left = B;
+            C.Right = A;
 
-            SetRight(C, A);
-
-            SetLeft(C, B);
-        }
-
-        private static void ChangeChild(Node<T> oldChild, Node<T>? newChild)
-        {
-            if (oldChild.Parent is null)
-                return;
-
-            if (oldChild.Parent.Left == oldChild)
-                oldChild.Parent.Left = newChild;
-            else
-                oldChild.Parent.Right = newChild;
-        }
-
-        private static void SetLeft(Node<T> parent, Node<T>? child)
-        {
-            parent.Left = child;
-
-            if (child is not null)
-                child.Parent = parent;
-        }
-
-        private static void SetRight(Node<T> parent, Node<T>? child)
-        {
-            parent.Right = child;
-
-            if (child is not null)
-                child.Parent = parent;
+            ChangeMyChild(A, C);
         }
 
         public int BalanceFactor()
@@ -171,43 +202,14 @@ namespace AvlBinaryTreeLib
             return Math.Abs(leftHeight - rightHeight);
         }
 
-        private Added InsertRight(T ivalue)
-        {
-            if (Right is not null)
-            {
-                return Right.Add(ivalue);
-            }
-            else
-            {
-                Right = new Node<T>(ivalue)
-                {
-                    Parent = this
-                };
 
-                return Added.None;
-            }
-        }
-
-        private Added InsertLeft(T ivalue)
-        {
-            if (Left is not null)
-            {
-                return Left.Add(ivalue);
-            }
-            else
-            {
-                Left = new Node<T>(ivalue)
-                {
-                    Parent = this
-                };
-
-                return Added.None;
-            }
-        }
 
         internal Node<T>? Search(T value)
         {
-            Node<T>? node =  value.CompareTo(Value) switch
+            if (IsDummy)
+                return Right?.Search(value);
+
+            Node<T>? node = value.CompareTo(Value) switch
             {
                 0 => this,
                 -1 => this.Left?.Search(value),

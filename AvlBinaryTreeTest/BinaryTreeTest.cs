@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AvlBinaryTreeLib;
+using NuGet.Frameworks;
 using Xunit;
 
 namespace AvlBinaryTreeTest
@@ -24,6 +25,18 @@ namespace AvlBinaryTreeTest
 
             // Then
             Assert.Equal(0, tree.BalanceFactor);
+            var A = tree.Search(10);
+            var B = tree.Search(20);
+            var C = tree.Search(30);
+
+            Assert.True(B.Left == A);
+            Assert.True(B.Right == B);
+
+            Assert.True(A.Left == null);
+            Assert.True(A.Right == null);
+
+            Assert.True(C.Left == null);
+            Assert.True(C.Right == null);
         }
 
 
@@ -41,6 +54,18 @@ namespace AvlBinaryTreeTest
 
             // Then
             Assert.Equal(0, tree.BalanceFactor);
+            var A = tree.Search(10);
+            var B = tree.Search(20);
+            var C = tree.Search(30);
+
+            Assert.True(B.Left == A);
+            Assert.True(B.Right == B);
+
+            Assert.True(A.Left == null);
+            Assert.True(A.Right == null);
+
+            Assert.True(C.Left == null);
+            Assert.True(C.Right == null);
         }
 
         [Fact]
@@ -57,9 +82,21 @@ namespace AvlBinaryTreeTest
 
             // Then
             Assert.Equal(0, tree.BalanceFactor);
+            var A = tree.Search(10);
+            var B = tree.Search(20);
+            var C = tree.Search(30);
+
+            Assert.True(B.Left == A);
+            Assert.True(B.Right == B);
+
+            Assert.True(A.Left == null);
+            Assert.True(A.Right == null);
+
+            Assert.True(C.Left == null);
+            Assert.True(C.Right == null);
         }
 
-                [Fact]
+        [Fact]
         public void SimpleLRTest()
         {
             // Given
@@ -73,6 +110,18 @@ namespace AvlBinaryTreeTest
 
             // Then
             Assert.Equal(0, tree.BalanceFactor);
+            var A = tree.Search(10);
+            var B = tree.Search(20);
+            var C = tree.Search(30);
+
+            Assert.True(B.Left == A);
+            Assert.True(B.Right == B);
+
+            Assert.True(A.Left == null);
+            Assert.True(A.Right == null);
+
+            Assert.True(C.Left == null);
+            Assert.True(C.Right == null);
         }
 
         [Fact]

@@ -9,13 +9,13 @@ namespace AvlBinaryTreeLib
     {
         public BinaryTree<T> Insert(T value)
         {
-            if(root == null)
+            if(root.Right == null)
             {
-                root = new Node<T>(value);
+                root.Right = new Node<T>(value);
             }
             else
             {
-                root.Insert(value);
+                root.Right.Insert(value);
             }
 
             return this;
@@ -23,11 +23,11 @@ namespace AvlBinaryTreeLib
 
         public Node<T>? Search(T value)
         {
-            return root?.Search(value);
+            return root.Right?.Search(value);
         }
 
-        private Node<T>? root;
+        private Node<T> root = new Node<T>(default);
 
-        public int? BalanceFactor => root?.BalanceFactor();
+        public int? BalanceFactor => root.Right?.BalanceFactor();
     }
 }
