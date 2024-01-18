@@ -155,6 +155,7 @@ namespace AvlBinaryTreeLib
             CalculateHeight(B);
             CalculateHeight(this);
         }
+
         private void LL(Node<T> balancingRoot)
         {
             var A = balancingRoot;
@@ -172,6 +173,7 @@ namespace AvlBinaryTreeLib
             CalculateHeight(B);
             CalculateHeight(this);
         }
+
         private void RL(Node<T> balancingRoot)
         {
             var A = balancingRoot;
@@ -194,6 +196,7 @@ namespace AvlBinaryTreeLib
             CalculateHeight(C);
             CalculateHeight(this);
         }
+        
         private void LR(Node<T> balancingRoot)
         {
             var A = balancingRoot;
