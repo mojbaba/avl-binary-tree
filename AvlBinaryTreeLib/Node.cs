@@ -111,10 +111,10 @@ namespace AvlBinaryTreeLib
         {
             Action<Node<T>>? action = (first, second) switch
             {
-                (Added.Right, Added.Right) => RR,
-                (Added.Left, Added.Left) => LL,
-                (Added.Right, Added.Left) => RL,
-                (Added.Left, Added.Right) => LR,
+                (Added.Right, Added.Right) => RightRightRotation,
+                (Added.Left, Added.Left) => LeftLeftRotation,
+                (Added.Right, Added.Left) => RightLeftRotation,
+                (Added.Left, Added.Right) => LeftRightRotation,
                 _ => null
             };
 
@@ -138,7 +138,7 @@ namespace AvlBinaryTreeLib
             node.Height = Math.Max(node.Left?.Height ?? 0, node.Right?.Height ?? 0) + 1;
         }
 
-        private void RR(Node<T> balancingRoot)
+        private void RightRightRotation(Node<T> balancingRoot)
         {
             var A = balancingRoot;
             var B = A.Right;
@@ -156,7 +156,7 @@ namespace AvlBinaryTreeLib
             CalculateHeight(this);
         }
 
-        private void LL(Node<T> balancingRoot)
+        private void LeftLeftRotation(Node<T> balancingRoot)
         {
             var A = balancingRoot;
             var B = A.Left;
@@ -174,7 +174,7 @@ namespace AvlBinaryTreeLib
             CalculateHeight(this);
         }
 
-        private void RL(Node<T> balancingRoot)
+        private void RightLeftRotation(Node<T> balancingRoot)
         {
             var A = balancingRoot;
             var B = A.Right;
@@ -196,8 +196,8 @@ namespace AvlBinaryTreeLib
             CalculateHeight(C);
             CalculateHeight(this);
         }
-        
-        private void LR(Node<T> balancingRoot)
+
+        private void LeftRightRotation(Node<T> balancingRoot)
         {
             var A = balancingRoot;
             var B = A.Left;
