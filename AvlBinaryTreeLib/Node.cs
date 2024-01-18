@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -89,7 +90,7 @@ namespace AvlBinaryTreeLib
                 stack = new Stack<Added>();
             }
 
-            this.Height = Math.Max(Left?.Height ?? 0, Right?.Height ?? 0) + 1;
+            CalculateHeight(this);
 
             return stack;
         }
@@ -131,6 +132,12 @@ namespace AvlBinaryTreeLib
                 Right = newChild;
             }
         }
+
+        private static void CalculateHeight(Node<T> node)
+        {
+            node.Height = Math.Max(node.Left?.Height ?? 0, node.Right?.Height ?? 0) + 1;
+        }
+
         private void RR(Node<T> balancingRoot)
         {
             var A = balancingRoot;
@@ -143,6 +150,10 @@ namespace AvlBinaryTreeLib
             B.Left = A;
 
             ChangeMyChild(A, B);
+
+            CalculateHeight(A);
+            CalculateHeight(B);
+            CalculateHeight(this);
         }
 
 
@@ -159,6 +170,9 @@ namespace AvlBinaryTreeLib
 
             ChangeMyChild(A, B);
 
+            CalculateHeight(A);
+            CalculateHeight(B);
+            CalculateHeight(this);
         }
         private void RL(Node<T> balancingRoot)
         {
@@ -176,6 +190,11 @@ namespace AvlBinaryTreeLib
             C.Right = B;
 
             ChangeMyChild(A, C);
+
+            CalculateHeight(A);
+            CalculateHeight(B);
+            CalculateHeight(C);
+            CalculateHeight(this);
         }
         private void LR(Node<T> balancingRoot)
         {
@@ -193,6 +212,11 @@ namespace AvlBinaryTreeLib
             C.Right = A;
 
             ChangeMyChild(A, C);
+
+            CalculateHeight(A);
+            CalculateHeight(B);
+            CalculateHeight(C);
+            CalculateHeight(this);
         }
 
         public int BalanceFactor()
