@@ -23,9 +23,9 @@ namespace AvlBinaryTreeLib
         public Node<T>? Left { get; set; }
         public Node<T>? Right { get; set; }
 
-        public void Insert(T ivalue)
+        public void Add(T ivalue)
         {
-            Add(ivalue);
+            Insert(ivalue);
         }
 
         private Stack<Added> InsertRight(T ivalue)
@@ -34,7 +34,7 @@ namespace AvlBinaryTreeLib
 
             if (Right is not null)
             {
-                stack = Right.Add(ivalue);
+                stack = Right.Insert(ivalue);
             }
             else
             {
@@ -53,7 +53,7 @@ namespace AvlBinaryTreeLib
 
             if (Left is not null)
             {
-                stack = Left.Add(ivalue);
+                stack = Left.Insert(ivalue);
             }
             else
             {
@@ -66,7 +66,7 @@ namespace AvlBinaryTreeLib
             return stack;
         }
 
-        private Stack<Added> Add(T ivalue)
+        private Stack<Added> Insert(T ivalue)
         {
             var comparedTo = ivalue.CompareTo(Value);
             Stack<Added> stack;
