@@ -125,7 +125,7 @@ namespace AvlBinaryTreeTest
         }
 
         [Fact]
-        public void Test1()
+        public void ExampleTest1()
         {
             var tree = new AvlBinaryTreeLib.BinaryTree<int>();
 
@@ -135,6 +135,49 @@ namespace AvlBinaryTreeTest
             {
                 tree.Insert(item);
             }
+
+            Assert.Equal(0, tree.BalanceFactor());
+
+            /* should be like this
+
+            25--------40---50
+            |         |
+            20--22    30
+            |
+            10
+
+            */
+
+
+            var root = tree.Search(25);
+            Assert.True(root.Left.Value == 20);
+            Assert.True(root.Left.Left.Value == 10);
+            Assert.True(root.Left.Right.Value == 22);
+            Assert.True(root.Right.Value == 40);
+            Assert.True(root.Right.Left.Value == 30);
+            Assert.True(root.Right.Right.Value == 50);
+        }
+
+        [Fact]
+        public void ExampleTest2()
+        {
+            // Given
+            var tree = new AvlBinaryTreeLib.BinaryTree<int>();
+
+            var values = new int[] { 40, 30, 50, 20, 45, 35, 60, 41, 46, 70 };
+
+            foreach (var item in values)
+            {
+                tree.Insert(item);
+            }
+
+            
+            Assert.Equal(1, tree.BalanceFactor());
+
+            tree.Insert(42);
+
+            Assert.Equal(0, tree.BalanceFactor());
+            
         }
     }
 }

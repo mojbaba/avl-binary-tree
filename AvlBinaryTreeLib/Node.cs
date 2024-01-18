@@ -155,8 +155,6 @@ namespace AvlBinaryTreeLib
             CalculateHeight(B);
             CalculateHeight(this);
         }
-
-
         private void LL(Node<T> balancingRoot)
         {
             var A = balancingRoot;
@@ -225,8 +223,6 @@ namespace AvlBinaryTreeLib
             var rightHeight = Right?.Height ?? 0;
             return Math.Abs(leftHeight - rightHeight);
         }
-
-
 
         internal Node<T>? Search(T value)
         {
