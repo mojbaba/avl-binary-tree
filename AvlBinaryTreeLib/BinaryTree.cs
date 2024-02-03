@@ -1,11 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AvlBinaryTreeLib
 {
-    public class BinaryTree<T> where T : IComparable<T>
+    public class BinaryTree<T> : IEnumerable<T> where T : IComparable<T>
     {
         public BinaryTree<T> Add(T value)
         {
@@ -25,5 +26,15 @@ namespace AvlBinaryTreeLib
         };
 
         public int? BalanceFactor() => root.Right?.BalanceFactor();
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new BinaryTreeEnumerator<T>(root.Right);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }
