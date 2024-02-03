@@ -29,7 +29,32 @@ namespace AvlBinaryTreeTest
             Assert.Equal(25, sorted[3]);
             Assert.Equal(30, sorted[4]);
             Assert.Equal(40, sorted[5]);
-            Assert.Equal(50, sorted[6]);            
+            Assert.Equal(50, sorted[6]);
+        }
+
+        [Fact]
+        public void ListInsertWhileIteration()
+        {
+            // Given
+            var tree = new AvlBinaryTreeLib.BinaryTree<int>();
+
+            var values = new int[] { 40, 20, 10, 25, 30, 22, 50 };
+
+            foreach (var item in values)
+            {
+                tree.Add(item);
+            }
+
+
+            // When
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                foreach (var item in tree)
+                {
+                    tree.Add(6);
+                }
+            });
+
         }
     }
 }
