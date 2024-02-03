@@ -7,9 +7,9 @@ namespace AvlBinaryTreeLib
 {
     public class BinaryTree<T> where T : IComparable<T>
     {
-        public BinaryTree<T> Insert(T value)
+        public BinaryTree<T> Add(T value)
         {
-            root.Insert(value);
+            root.Add(value);
 
             return this;
         }

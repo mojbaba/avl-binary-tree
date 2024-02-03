@@ -18,9 +18,9 @@ namespace AvlBinaryTreeTest
             var tree = new BinaryTree<int>();
 
             // When
-            tree.Insert(10)
-                .Insert(20)
-                .Insert(30);
+            tree.Add(10)
+                .Add(20)
+                .Add(30);
 
 
             // Then
@@ -47,9 +47,9 @@ namespace AvlBinaryTreeTest
             var tree = new BinaryTree<int>();
 
             // When
-            tree.Insert(30)
-                .Insert(20)
-                .Insert(10);
+            tree.Add(30)
+                .Add(20)
+                .Add(10);
 
 
             // Then
@@ -75,9 +75,9 @@ namespace AvlBinaryTreeTest
             var tree = new BinaryTree<int>();
 
             // When
-            tree.Insert(10)
-                .Insert(30)
-                .Insert(20);
+            tree.Add(10)
+                .Add(30)
+                .Add(20);
 
 
             // Then
@@ -103,9 +103,9 @@ namespace AvlBinaryTreeTest
             var tree = new BinaryTree<int>();
 
             // When
-            tree.Insert(30)
-                .Insert(10)
-                .Insert(20);
+            tree.Add(30)
+                .Add(10)
+                .Add(20);
 
 
             // Then
@@ -133,7 +133,7 @@ namespace AvlBinaryTreeTest
 
             foreach (var item in values)
             {
-                tree.Insert(item);
+                tree.Add(item);
             }
 
             Assert.Equal(0, tree.BalanceFactor());
@@ -168,13 +168,13 @@ namespace AvlBinaryTreeTest
 
             foreach (var item in values)
             {
-                tree.Insert(item);
+                tree.Add(item);
             }
 
             
             Assert.Equal(1, tree.BalanceFactor());
 
-            tree.Insert(42);
+            tree.Add(42);
 
             Assert.Equal(0, tree.BalanceFactor());
             
