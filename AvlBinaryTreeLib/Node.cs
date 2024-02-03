@@ -24,7 +24,7 @@ namespace AvlBinaryTreeLib
         public Node<T>? Left { get; set; }
         public Node<T>? Right { get; set; }
 
-        public void Add(T ivalue)
+        internal void Add(T ivalue)
         {
             Insert(ivalue);
         }
