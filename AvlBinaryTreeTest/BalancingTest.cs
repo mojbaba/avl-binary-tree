@@ -8,7 +8,7 @@ using Xunit;
 
 namespace AvlBinaryTreeTest
 {
-    public class BinaryTreeTest
+    public class BalancingTest
     {
 
         [Fact]
